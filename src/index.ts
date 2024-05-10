@@ -12,12 +12,10 @@ const PORT = process.env.PORT;
 mongoConnect(process.env.DATABASE!);
 
 wss.on('listening', () => {
-  console.log(`Servidor WebSocket escuchando en el puerto ${PORT}`);
 });
 
 
 server.listen(PORT, () => {
-  console.log(`Servidor HTTP escuchando en el puerto ${PORT}`);
 });
 
 const redisSubscribe = new SubscriptionListeners(process.env.REDIS!);
@@ -60,8 +58,6 @@ setTimeout(() => {
       objetoVariable.schedule = Number(schedule)
       objetoVariable.line = line
       objetoVariable.service = Number(service)
-
-      console.log(await Core.intance.caching?.hGetAll(`socket:${message.idSocket}`));
 
       if(objetoVariable.idSocket >= 8_700_000 && objetoVariable.idSocket <= 8_700_999){
         sendMessageCity(JSON.stringify(objetoVariable), "Posadas")
