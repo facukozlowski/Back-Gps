@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
 import http from 'http';
 import WebSocket from 'ws';
 import dotenv from 'dotenv';
@@ -15,6 +15,7 @@ const wss = new WebSocket.Server({ server });
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(urlencoded({extended:true}))
 app.use(cors())
 app.use("/api/v1", authRoutes);
 
