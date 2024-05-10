@@ -16,7 +16,9 @@ const wss = new WebSocket.Server({ server });
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(urlencoded({extended:true}))
-app.use(cors())
+app.use(cors({
+  origin: "*"
+}))
 app.use("/api/v1", authRoutes);
 
 const conexionesPorCiudad: { [ciudad: string]: WebSocket[] } = {};
