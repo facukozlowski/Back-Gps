@@ -34,15 +34,11 @@ function manejadorDeMensajes ( cliente:WebSocket){
         const token = data.token.split(' ')[1];
         
         const ciudad = cityOfToken(token);
-        console.log(ciudad , 'city');
         
         if (!ciudad) {
           console.error('Token inválido:', token);
           return;
-        }
-        
-        console.log('Token recibido:', token, 'Ciudad asociada:', ciudad);
-        
+        }        
         
         if (!conexionesPorCiudad[ciudad]) {
           conexionesPorCiudad[ciudad] = [];

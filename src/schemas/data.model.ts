@@ -30,6 +30,7 @@ export interface webSocketResponse {
 
 
 export interface ICalculousResponse {
+    token: string | undefined;
     idSocket: number;
     recId: string;
     Date: string;

@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import { Core } from '../src/server/server';
 import { SubscriptionListeners } from './database/redisSubscribe';
-import{ server, wss } from './app'; 
-import { mongoConnect } from '../src/database/mongoConnection';
+import{ server, wss, sendMessageCity } from './app'; 
 import { ICalculousResponse, webSocketResponse } from './schemas/data.model';
+import { mongoConnect } from './database/mongoConnection';
+import { Core } from './server/server';
 
 dotenv.config();
 
@@ -63,7 +63,11 @@ setTimeout(() => {
 
       console.log(await Core.intance.caching?.hGetAll(`socket:${message.idSocket}`));
 
-      console.log(objetoVariable);
+      if(objetoVariable.idSocket >= 8_700_000 && objetoVariable.idSocket <= 8_700_999){
+        sendMessageCity(JSON.stringify(objetoVariable), "Posadas")
+      }else if(objetoVariable.idSocket >= 8_701_000 && objetoVariable.idSocket <= 8_701_999){
+        sendMessageCity(JSON.stringify(objetoVariable), "Obera")
+      }
   });
 }, 1000);
 

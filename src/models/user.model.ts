@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     city: {
-        // 1 - Posadas 2 - Obera
-        type: Number,
+        // Posadas - Obera
+        type: String,
         required: true
     }
 },{

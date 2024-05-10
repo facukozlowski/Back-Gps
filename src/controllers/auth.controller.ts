@@ -3,6 +3,34 @@ import User from '../models/user.model';
 import bcrypt from 'bcryptjs';
 import { createToken } from '../libs/jwt';
 
+export const register = async (req: Request, res: Response) => {
+    const {username, password, city} = req.body
+   try {
+
+    const passwordHash = await bcrypt.hash(password, 10)
+
+    const newUser = new User({
+        username,
+        password: passwordHash,
+        city
+    })
+ 
+    const userSaved = await newUser.save()
+    const token = await createToken({id : userSaved._id})
+    res.cookie('token', token);
+    res.json({
+    id: userSaved.id,
+    username: userSaved.username,
+    city: userSaved.city
+    }
+ )
+   } catch (error) {
+    res.status(500).json({message: error})
+   }
+   
+}
+    
+
 
 export const login = async (req: Request, res: Response) => {
     const { username, password } = req.body;
