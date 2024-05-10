@@ -26,10 +26,3 @@ export const login = async (req: Request, res: Response) => {
        res.status(500).json({ message: error }) 
     }
 }
-
-export const logout = async (req: Request, res: Response) => {
-    res.cookie('token', "", {
-        expires: new Date(0)
-    })
-    return res.sendStatus(200)
-}

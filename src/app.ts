@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import authRoutes from './routes/auth.routes';
 import jwt from 'jsonwebtoken';
+import cors from "cors"
 
 dotenv.config();
 
@@ -14,7 +15,8 @@ const wss = new WebSocket.Server({ server });
 
 app.use(morgan('dev'));
 app.use(express.json());
-app.use("/api", authRoutes);
+app.use(cors())
+app.use("/api/v1", authRoutes);
 
 const conexionesPorCiudad: { [ciudad: string]: WebSocket[] } = {};
 
