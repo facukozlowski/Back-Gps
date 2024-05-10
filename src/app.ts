@@ -17,15 +17,14 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(urlencoded({extended:true}))
 app.use(cors({
-  origin: "*"
+  origin: "*",
+  credentials: false
 }))
 app.use("/api/v1", authRoutes);
 
 const conexionesPorCiudad: { [ciudad: string]: WebSocket[] } = {};
 
-wss.on('connection', (cliente) => {
-  console.log('Nuevo cliente conectado');
-  
+wss.on('connection', (cliente) => {  
   cliente.on('message',manejadorDeMensajes(cliente));
 });
 
