@@ -9,7 +9,7 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-mongoConnect(process.env.MONGODB_URI!);
+mongoConnect(process.env.DATABASE!);
 
 wss.on('listening', () => {
   console.log(`Servidor WebSocket escuchando en el puerto ${PORT}`);
