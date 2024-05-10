@@ -16,12 +16,12 @@ export const login = async (req: Request, res: Response) => {
 
         const token = await createToken({ id: userFound._id, city: userFound.city });
 
-        res.json({
+        res.json({code:200, status:true, message:"¡ Usuario Logueado !",body:{
             token: `bearer ${token}`,
             id: userFound._id,
             username: userFound.username,
             city: userFound.city
-        });
+        }});
     } catch (error) {
         res.status(500).json({ message: error })
     }
