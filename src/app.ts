@@ -17,8 +17,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(urlencoded({extended:true}))
 app.use(cors({
-  origin: "*",
-  credentials: false
+  origin: "*"
 }))
 app.use("/api/v1", authRoutes);
 
@@ -70,7 +69,7 @@ function sendMessageCity(mensaje: string, ciudad: string) {
 
 function cityOfToken(token: string): string | undefined {
   try {
-    const decodedToken: any = jwt.decode(token);
+    const decodedToken: any = jwt.decode(token.split(" ")[1]);
 
     if (decodedToken && decodedToken.city) {
       return decodedToken.city;
