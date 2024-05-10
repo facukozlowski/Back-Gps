@@ -18,10 +18,16 @@ app.use("/api", authRoutes);
 
 const conexionesPorCiudad: { [ciudad: string]: WebSocket[] } = {};
 
-wss.on('connection', (ws) => {
+wss.on('connection', (cliente) => {
   console.log('Nuevo cliente conectado');
   
-  ws.on('message', (message) => {
+  cliente.on('message',manejadorDeMensajes(cliente));
+});
+
+
+function manejadorDeMensajes ( cliente:WebSocket){
+  return (message:Buffer)=>{
+
     try {
       const data = JSON.parse(message.toString());
       if (data.type === 'Subscription' && data.token) {
@@ -29,29 +35,29 @@ wss.on('connection', (ws) => {
         
         const ciudad = cityOfToken(token);
         console.log(ciudad , 'city');
-
+        
         if (!ciudad) {
           console.error('Token inválido:', token);
           return;
         }
-
+        
         console.log('Token recibido:', token, 'Ciudad asociada:', ciudad);
-
+        
         
         if (!conexionesPorCiudad[ciudad]) {
           conexionesPorCiudad[ciudad] = [];
         }
-        conexionesPorCiudad[ciudad].push(ws);
+        conexionesPorCiudad[ciudad].push(cliente);
       } else {
         console.error('Mensaje no válido:', data);
       }
     } catch (error) {
       console.error('Error al parsear el mensaje JSON:', error);
     }
-
-    ws.send(`Servidor: Recibí tu mensaje "${message}"`);
-  });
-});
+    
+    cliente.send(`Servidor: Recibí tu mensaje "${message}"`);
+  }
+  }
 
 function sendMessageCity(mensaje: string, ciudad: string) {
   const conexiones = conexionesPorCiudad[ciudad];

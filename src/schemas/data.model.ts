@@ -6,7 +6,7 @@ enum StatusService {
     REVISAR_BANDERA="REVISAR BANDERA"
   }
 
-interface webSocketResponse {
+export interface webSocketResponse {
     HoraPuntoDePaso:string; // hh:mm:ss.mmm
     course: number;
     date: string; // ddmmaa
@@ -36,11 +36,11 @@ export interface Response {
     dateTime?: string;
     msg: string;
     statusService: StatusService;
-    desvio?: string;
-    HoraPuntoDePaso?: string;
-    puntoDePaso?: string;
-    inicioViaje?: any;
-    findViaje?: any;
+    desvio?: string; //
+    HoraPuntoDePaso?: string; //
+    puntoDePaso?: string; //
+    inicioViaje?: any; //
+    findViaje?: any; //
     driver?: string;
     docketDriver?: number;
   }
