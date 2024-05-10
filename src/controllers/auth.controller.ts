@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response) => {
         const token = await createToken({ id: userFound._id, city: userFound.city });
 
         res.json({
-            token: token,
+            token: `bearer ${token}`,
             id: userFound._id,
             username: userFound.username,
             city: userFound.city
