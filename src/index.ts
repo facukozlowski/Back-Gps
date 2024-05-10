@@ -7,7 +7,7 @@ import { Core } from './server/server';
 
 dotenv.config();
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 
 mongoConnect(process.env.MONGODB_URI!);
 
@@ -69,7 +69,7 @@ setTimeout(() => {
         sendMessageCity(JSON.stringify(objetoVariable), "Obera")
       }
   });
+  redisSubscribe.connectSocket();
 }, 1000);
 
-redisSubscribe.connectSocket();
 
