@@ -3,7 +3,7 @@ import { Core } from '../src/server/server';
 import { SubscriptionListeners } from './database/redisSubscribe';
 import{ server, wss } from './app'; 
 import { mongoConnect } from '../src/database/mongoConnection';
-import { webSocketResponse } from './schemas/data.model';
+import { ICalculousResponse, webSocketResponse } from './schemas/data.model';
 
 dotenv.config();
 
@@ -23,34 +23,49 @@ server.listen(PORT, () => {
 const redisSubscribe = new SubscriptionListeners(process.env.REDIS!);
 Core.intance
 
-setTimeout(()=>{
-
+setTimeout(() => {
   redisSubscribe.newChannel("calculous:response", async (message, channel) => {
-    let objetoVariable: webSocketResponse = {
-    idSocket: message.idSocket as any,
-    HoraPuntoDePaso: message.HoraPuntoDePaso as any,
-    course: message.course as any,
-    date: message.date as any,
-    delay: message.delay as any,
-    desvio: message.desvio as any,
-    driver: message.driver as any,
-    estado: message.estado as any,
-    hour: message.hour as any,
-    internalNumber: message.internalNumber as any,
-    lat: message.lat as any,
-    line: message.line as any,
-    lon: message.lon as any,
-    puntoDePaso: message.puntoDePaso as any,
-    schedule: message.schedule as any,
-    service: message.service as any,
-    speed: message.speed as any,
-    statusService: message.statusService as any
-    }
+    const calculousResponse:ICalculousResponse = message as any
 
-    console.log(await Core.intance.caching?.hGetAll(`socket:${message}`))
+      let objetoVariable: webSocketResponse = {
+          idSocket: calculousResponse.idSocket,
+          HoraPuntoDePaso:calculousResponse.HoraPuntoDePaso!, 
+          course: 0,
+          date: calculousResponse.Date,
+          hour: "",
+          delay: calculousResponse.desvio!,
+          desvio: calculousResponse.desvio!,
+          driver: "",
+          estado:calculousResponse.statusService,
+          statusService: calculousResponse.statusService,
+          internalNumber: 0,
+          lat: 0,
+          lon: 0,
+          speed: 0,
+          schedule: 0,
+          service: 0,
+          line: "", 
+          puntoDePaso: calculousResponse.HoraPuntoDePaso!,
+      };
+
+      const [course,hour,driver,internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","hour","driver","internalNumber","lat","lon","speed","schedule","line","service"]) || []
+
+      objetoVariable.course = Number(course)
+      objetoVariable.hour = hour
+      objetoVariable.driver = driver
+      objetoVariable.internalNumber = Number(internalNumber)
+      objetoVariable.lat = Number(lat)
+      objetoVariable.lon = Number(lon)
+      objetoVariable.speed = Number(speed)
+      objetoVariable.schedule = Number(schedule)
+      objetoVariable.line = line
+      objetoVariable.service = Number(service)
+
+      console.log(await Core.intance.caching?.hGetAll(`socket:${message.idSocket}`));
+
+      console.log(objetoVariable);
   });
-
-},1000)
+}, 1000);
 
 redisSubscribe.connectSocket();
 

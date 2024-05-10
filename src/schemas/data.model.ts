@@ -29,7 +29,7 @@ export interface webSocketResponse {
 
 
 
-export interface Response {
+export interface ICalculousResponse {
     idSocket: number;
     recId: string;
     Date: string;
