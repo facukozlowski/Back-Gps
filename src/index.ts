@@ -4,6 +4,7 @@ import{ server, wss, sendMessageCity } from './app';
 import { ICalculousResponse, webSocketResponse } from './schemas/data.model';
 import { mongoConnect } from './database/mongoConnection';
 import { Core } from './server/server';
+import { DateTime } from 'luxon';
 
 dotenv.config();
 
@@ -29,8 +30,8 @@ setTimeout(() => {
           idSocket: calculousResponse.idSocket,
           HoraPuntoDePaso:calculousResponse.HoraPuntoDePaso!, 
           course: 0,
-          date: calculousResponse.Date,
-          hour: "",
+          date: DateTime.fromISO(calculousResponse.Date).toFormat("yyMMdd"),
+          hour: DateTime.fromISO(calculousResponse.Date).toFormat("hh:mm:ss"),
           delay: calculousResponse.desvio!,
           desvio: calculousResponse.desvio!,
           driver: "",
@@ -46,10 +47,9 @@ setTimeout(() => {
           puntoDePaso: calculousResponse.HoraPuntoDePaso!,
       };
 
-      const [course,hour,driver,internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","hour","driver","internalNumber","lat","lon","speed","schedule","line","service"]) || []
+      const [course,driver,internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","driver","internalNumber","lat","lon","speed","schedule","line","service"]) || []
 
       objetoVariable.course = Number(course)
-      objetoVariable.hour = hour
       objetoVariable.driver = driver
       objetoVariable.internalNumber = Number(internalNumber)
       objetoVariable.lat = Number(lat)
