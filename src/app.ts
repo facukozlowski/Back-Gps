@@ -70,7 +70,7 @@ function sendMessageCity(mensaje: string, ciudad: string) {
 
 function cityOfToken(token: string): string | undefined {
   try {
-    const decodedToken: any = jwt.decode(token.split(" ")[1]);
+    const decodedToken: any = jwt.decode(token);
 
     if (decodedToken && decodedToken.city) {
       return decodedToken.city;

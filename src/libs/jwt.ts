@@ -7,7 +7,6 @@ export const createToken = (payload: any) => {
             payload,
             TOKEN_SECRET,
         {
-            expiresIn: '1d'
         },
         (err, token) => {
             if (err) reject(err)
