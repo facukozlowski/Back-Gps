@@ -17,7 +17,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(urlencoded({extended:true}))
 app.use(cors({
-  origin: "*"
+  origin: "*",
+  credentials: true
 }))
 app.use("/api/v1", authRoutes);
 
