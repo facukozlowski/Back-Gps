@@ -13,7 +13,7 @@ export interface webSocketResponse {
     delay: string; // +/-mm:ss
     desvio: string; // +/-mm:ss
     driver: string;
-    estado: StatusService,
+    estado: string,
     hour: string; // hh:mm:ss
     idSocket: number;
     internalNumber: number;
@@ -24,7 +24,7 @@ export interface webSocketResponse {
     schedule: number;
     service: number;
     speed: number;
-    statusService: StatusService
+    statusService: string
   }
 
 

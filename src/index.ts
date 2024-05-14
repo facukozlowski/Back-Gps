@@ -26,7 +26,7 @@ setTimeout(() => {
   redisSubscribe.newChannel("calculous:response", async (message, channel) => {
     const calculousResponse:ICalculousResponse = message as any
 
-      let objetoVariable: webSocketResponse = {
+      let response: webSocketResponse = {
           idSocket: calculousResponse.idSocket,
           HoraPuntoDePaso:calculousResponse.HoraPuntoDePaso!, 
           course: 0,
@@ -35,7 +35,7 @@ setTimeout(() => {
           delay: calculousResponse.desvio!,
           desvio: calculousResponse.desvio!,
           driver: "",
-          estado:calculousResponse.statusService,
+          estado: calculousResponse.statusService,
           statusService: calculousResponse.statusService,
           internalNumber: 0,
           lat: 0,
@@ -47,22 +47,27 @@ setTimeout(() => {
           puntoDePaso: calculousResponse.HoraPuntoDePaso!,
       };
 
-      const [course,driver,internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","driver","internalNumber","lat","lon","speed","schedule","line","service"]) || []
 
-      objetoVariable.course = Number(course)
-      objetoVariable.driver = driver
-      objetoVariable.internalNumber = Number(internalNumber)
-      objetoVariable.lat = Number(lat)
-      objetoVariable.lon = Number(lon)
-      objetoVariable.speed = Number(speed)
-      objetoVariable.schedule = Number(schedule)
-      objetoVariable.line = line
-      objetoVariable.service = Number(service)
+      const [course, driver, statusService, internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","driver","statusService","internalNumber","lat","lon","speed","schedule","line","service"]) || []
 
-      if(objetoVariable.idSocket >= 8_700_000 && objetoVariable.idSocket <= 8_700_999){
-        sendMessageCity(JSON.stringify(objetoVariable), "Posadas")
-      }else if(objetoVariable.idSocket >= 8_701_000 && objetoVariable.idSocket <= 8_701_999){
-        sendMessageCity(JSON.stringify(objetoVariable), "Obera")
+      response.course = Number(course)
+      response.driver = driver
+      response.estado = statusService
+      response.statusService = statusService
+      response.internalNumber = Number(internalNumber)
+      response.lat = Number(lat)
+      response.lon = Number(lon)
+      response.speed = Number(speed)
+      response.schedule = Number(schedule)
+      response.line = line
+      response.service = Number(service)
+
+      console.log(response);
+
+      if(response.idSocket >= 8_700_000 && response.idSocket <= 8_700_999){
+        sendMessageCity(JSON.stringify(response), "Posadas")
+      }else if(response.idSocket >= 8_701_000 && response.idSocket <= 8_701_999){
+        sendMessageCity(JSON.stringify(response), "Obera")
       }
   });
   redisSubscribe.connectSocket();
