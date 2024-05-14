@@ -21,8 +21,8 @@ export interface webSocketResponse {
     line: string;
     lon: number;
     puntoDePaso: string;
-    schedule: number;
-    service: number;
+    schedule: number | string;
+    service: number | string;
     speed: number;
     statusService: string
   }

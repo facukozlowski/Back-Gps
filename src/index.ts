@@ -48,9 +48,11 @@ setTimeout(() => {
       };
 
 
-      const [course, driver, statusService, internalNumber,lat,lon,speed,schedule,line,service] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["course","driver","statusService","internalNumber","lat","lon","speed","schedule","line","service"]) || []
-
+      const [HoraPuntoDePaso, course, delay, desvio, driver, statusService, internalNumber, lat, lon, speed, schedule,line, service, puntoDePaso] = await Core.intance.caching?.hmGet(`socket:${calculousResponse.idSocket}`,["HoraPuntoDePaso", "course", "delay", "desvio", "driver", "statusService", "internalNumber", "lat", "lon", "speed", "schedule", "line", "service", "puntoDePaso"]) || []
+      response.HoraPuntoDePaso = HoraPuntoDePaso
       response.course = Number(course)
+      response.delay = delay
+      response.desvio = delay
       response.driver = driver
       response.estado = statusService
       response.statusService = statusService
@@ -61,6 +63,9 @@ setTimeout(() => {
       response.schedule = Number(schedule)
       response.line = line
       response.service = Number(service)
+      response.puntoDePaso = puntoDePaso
+
+      console.log(response);
 
       if(response.idSocket >= 8_700_000 && response.idSocket <= 8_700_999){
         sendMessageCity(JSON.stringify(response), "Posadas")
