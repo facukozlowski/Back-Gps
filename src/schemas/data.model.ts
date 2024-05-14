@@ -1,4 +1,4 @@
-enum StatusService {
+export enum StatusService {
     ATRASADO="ATRASADO",
     ADELANTADO="ADELANTADO",
     EN_HORARIO="EN HORARIO",
@@ -13,7 +13,7 @@ export interface webSocketResponse {
     delay: string; // +/-mm:ss
     desvio: string; // +/-mm:ss
     driver: string;
-    estado: string,
+    estado: StatusService,
     hour: string; // hh:mm:ss
     idSocket: number;
     internalNumber: number;
@@ -24,7 +24,7 @@ export interface webSocketResponse {
     schedule: number | string;
     service: number | string;
     speed: number;
-    statusService: string
+    statusService: StatusService
   }
 
 
