@@ -35,8 +35,8 @@ setTimeout(() => {
           delay: calculousResponse.desvio!,
           desvio: calculousResponse.desvio!,
           driver: "",
-          estado: calculousResponse.statusService,
-          statusService: calculousResponse.statusService,
+          estado: "",
+          statusService: "",
           internalNumber: 0,
           lat: 0,
           lon: 0,
@@ -65,7 +65,8 @@ setTimeout(() => {
       response.service = Number(service)
       response.puntoDePaso = puntoDePaso
 
-      console.log(response);
+        console.log(response, response.idSocket);
+      
 
       if(response.idSocket >= 8_700_000 && response.idSocket <= 8_700_999){
         sendMessageCity(JSON.stringify(response), "Posadas")
