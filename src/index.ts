@@ -62,8 +62,6 @@ setTimeout(() => {
       response.line = line
       response.service = Number(service)
 
-      console.log(response);
-
       if(response.idSocket >= 8_700_000 && response.idSocket <= 8_700_999){
         sendMessageCity(JSON.stringify(response), "Posadas")
       }else if(response.idSocket >= 8_701_000 && response.idSocket <= 8_701_999){
