@@ -54,8 +54,8 @@ setTimeout(() => {
     response.delay = delay
     response.desvio = delay
     response.driver = driver;
-    response.estado = statusService ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
-    response.statusService = statusService ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
+    response.estado = statusService !== undefined ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
+    response.statusService = statusService !== undefined ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
     response.internalNumber = Number(internalNumber);
     response.lat = Number(lat);
     response.lon = Number(lon);
