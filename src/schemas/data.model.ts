@@ -36,7 +36,7 @@ export interface ICalculousResponse {
     Date: string;
     dateTime?: string;
     msg: string;
-    statusService: StatusService;
+    statusService?: StatusService;
     desvio?: string; //
     HoraPuntoDePaso?: string; //
     puntoDePaso?: string; //

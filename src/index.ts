@@ -35,8 +35,8 @@ setTimeout(() => {
       delay: calculousResponse.desvio!,
       desvio: calculousResponse.desvio!,
       driver: "",
-      estado: calculousResponse.statusService.replace(/"/g, "") as StatusService,
-      statusService: calculousResponse.statusService.replace(/"/g, "") as StatusService,
+      estado: calculousResponse.statusService?.replace(/"/g, "") as StatusService,
+      statusService: calculousResponse.statusService?.replace(/"/g, "") as StatusService,
       internalNumber: 0,
       lat: 0,
       lon: 0,
@@ -54,8 +54,8 @@ setTimeout(() => {
     response.delay = delay
     response.desvio = delay
     response.driver = driver;
-    response.estado = statusService !== undefined ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
-    response.statusService = statusService !== undefined ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
+    response.estado = statusService ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
+    response.statusService = statusService ? (statusService.replace(/"/g, "") as StatusService) : StatusService.SIN_CONFIGURACION;
     response.internalNumber = Number(internalNumber);
     response.lat = Number(lat);
     response.lon = Number(lon);
